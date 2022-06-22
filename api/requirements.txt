@@ -1,0 +1,4 @@
+starlite
+python-keycloak
+requests
+pymongo
