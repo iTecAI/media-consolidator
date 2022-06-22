@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import "./App.scss";
+import { createTheme, Theme, ThemeProvider } from "@mui/material";
+
+
+export const theme: Theme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: '#5d2985',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+    background: {
+      default: '#2d2d2d',
+      paper: '#353535',
+    },
+  },
+});
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return <ThemeProvider theme={theme}>
+        <div className="root">
+
+        </div>
+    </ThemeProvider>
 }
 
 export default App;
