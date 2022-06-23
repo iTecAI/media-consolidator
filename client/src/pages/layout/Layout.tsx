@@ -15,7 +15,7 @@ export function Layout(props: LayoutProps) {
         <div>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" className="noselect">
-                    <Toolbar>
+                    <Toolbar variant="dense">
                         <Download fontSize="large" sx={{ marginRight: "20px" }} />
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             Consolidator
@@ -24,7 +24,12 @@ export function Layout(props: LayoutProps) {
                     </Toolbar>
                 </AppBar>
             </Box>
-            <div className="page-content">{props.children ?? []}</div>
+            <div
+                className="page-content"
+                style={{ display: "inline-block", width: "100%", height: "calc(100% - 48px)" }}
+            >
+                {props.children ?? []}
+            </div>
         </div>
     );
 }

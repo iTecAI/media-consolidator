@@ -2,6 +2,7 @@ import "./App.scss";
 import { createTheme, Theme, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Layout } from "./pages/layout/Layout";
+import Login from "./pages/login/Login";
 
 export const theme: Theme = createTheme({
     palette: {
@@ -33,7 +34,14 @@ function App() {
                                 </Layout>
                             }
                         ></Route>
-                        <Route path="/login" element={<Layout></Layout>} />
+                        <Route
+                            path="/login"
+                            element={
+                                <Layout>
+                                    <Login />
+                                </Layout>
+                            }
+                        />
                     </Routes>
                 </BrowserRouter>
             </div>
