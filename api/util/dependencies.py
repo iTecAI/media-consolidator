@@ -3,7 +3,6 @@ from starlite import Request
 
 
 def uuid_dep(request: Request[Any]) -> str | None:
-    print(request.headers)
     if not "authorization" in request.headers.keys():
         return None
     if not "Bearer " in request.headers["authorization"]:

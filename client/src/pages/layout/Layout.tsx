@@ -4,6 +4,8 @@ import { Download } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import "./layout.scss";
 import { get } from "../../util/api";
+import { LoginResponseModel } from "../../util/models";
+import { useNavigate } from "react-router-dom";
 
 export type LayoutProps = {
     children?: React.ReactNode;
@@ -12,8 +14,15 @@ export type LayoutProps = {
 };
 
 export function Layout(props: LayoutProps) {
+    let nav = useNavigate();
+
     useEffect(() => {
-        get({ path: "/account" }).then(console.log);
+        get<LoginResponseModel>({ path: "/account" }).then((result) => {
+            console.log(result);
+            if (!result.success) {
+                nav("/login", { replace: true });
+            }
+        });
     }, []);
 
     return (
