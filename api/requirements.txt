@@ -1,4 +1,4 @@
 starlite
-python-keycloak
+keycloak-basic
 requests
 pymongo
