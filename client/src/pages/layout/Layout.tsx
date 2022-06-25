@@ -1,8 +1,9 @@
 import { AppBar, Button, Toolbar, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Download } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import "./layout.scss";
+import { get } from "../../util/api";
 
 export type LayoutProps = {
     children?: React.ReactNode;
@@ -11,6 +12,10 @@ export type LayoutProps = {
 };
 
 export function Layout(props: LayoutProps) {
+    useEffect(() => {
+        get({ path: "/account" }).then(console.log);
+    }, []);
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>

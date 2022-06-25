@@ -1,9 +1,11 @@
-from starlite import Starlite
+from typing import Any, Dict
+from starlite import Starlite, get
 from util import ApplicationState
 import json
 import os
 from pymongo.mongo_client import MongoClient
 from keycloak import Keycloak
+from controllers import *
 
 
 def load_app(state: ApplicationState):
@@ -26,11 +28,17 @@ def load_app(state: ApplicationState):
     if "keycloak" in state.config["authSource"]["modes"]:
         state.keycloak = Keycloak(
             state.config["authSource"]["keycloak"]["url"],
-            state.config["authSource"]["keycloak"]["sso"],
+            state.config["authSource"]["keycloak"]["realm"],
             state.config["authSource"]["keycloak"]["clientId"],
             state.config["authSource"]["keycloak"]["clientSecret"],
         )
 
 
-if __name__ == "__main__":
-    app = Starlite(route_handlers=[], on_startup=[load_app])
+@get("/")
+async def get_root() -> Dict[str, Any]:
+    return {"status": "running"}
+
+
+app = Starlite(
+    route_handlers=[get_root, LoginController, AccountController], on_startup=[load_app]
+)
