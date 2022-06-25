@@ -1,4 +1,4 @@
-export type ResponseModel<T> =
+export type ResponseModel<T extends any | null> =
     | { success: false; code: number; reason: string }
     | { success: true; value: T };
 

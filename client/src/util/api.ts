@@ -24,10 +24,17 @@ export async function get<T>(options: GetOptions): Promise<ResponseModel<T>> {
             reason: (await response.json()).detail,
         };
     } else {
-        return {
-            success: true,
-            value: await response.json(),
-        };
+        if (response.status === 204) {
+            return {
+                success: true,
+                value: null as unknown as T,
+            };
+        } else {
+            return {
+                success: true,
+                value: await response.json(),
+            };
+        }
     }
 }
 
@@ -55,9 +62,16 @@ export async function post<T>(options: PostOptions): Promise<ResponseModel<T>> {
             reason: (await response.json()).detail,
         };
     } else {
-        return {
-            success: true,
-            value: await response.json(),
-        };
+        if (response.status === 204) {
+            return {
+                success: true,
+                value: null as unknown as T,
+            };
+        } else {
+            return {
+                success: true,
+                value: await response.json(),
+            };
+        }
     }
 }

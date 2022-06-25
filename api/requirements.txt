@@ -2,3 +2,4 @@ starlite
 keycloak-basic
 requests
 pymongo
+fastapi-restful

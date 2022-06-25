@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Download } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import "./layout.scss";
-import { get } from "../../util/api";
+import { get, post } from "../../util/api";
 import { LoginResponseModel } from "../../util/models";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,7 @@ export function Layout(props: LayoutProps) {
                 nav("/login", { replace: true });
             }
         });
-    }, []);
+    }, [nav]);
 
     return (
         <div>
@@ -34,7 +34,18 @@ export function Layout(props: LayoutProps) {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             Consolidator
                         </Typography>
-                        {props.showLogout && <Button color="inherit">Logout</Button>}
+                        {props.showLogout && (
+                            <Button
+                                color="inherit"
+                                onClick={() => {
+                                    post<null>({ path: "/account/logout" }).then(() =>
+                                        nav("/login", { replace: true })
+                                    );
+                                }}
+                            >
+                                Logout
+                            </Button>
+                        )}
                     </Toolbar>
                 </AppBar>
             </Box>
