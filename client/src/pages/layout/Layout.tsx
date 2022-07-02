@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 export type LayoutProps = {
     children?: React.ReactNode;
     showLogout?: boolean;
-    showTabs?: boolean;
 };
 
 export function Layout(props: LayoutProps) {
@@ -26,7 +25,7 @@ export function Layout(props: LayoutProps) {
     }, [nav]);
 
     return (
-        <div>
+        <div style={{ height: "100%", width: "100%" }}>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" className="noselect">
                     <Toolbar variant="dense">

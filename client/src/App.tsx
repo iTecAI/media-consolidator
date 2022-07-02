@@ -1,14 +1,15 @@
 import "./App.scss";
 import { createTheme, Theme, ThemeProvider } from "@mui/material";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./pages/layout/Layout";
 import Login from "./pages/login/Login";
+import IndexPage from "./pages/index/Index";
 
 export const theme: Theme = createTheme({
     palette: {
         mode: "dark",
         primary: {
-            main: "#5d2985",
+            main: "#8f3dce",
         },
         secondary: {
             main: "#f50057",
@@ -29,8 +30,8 @@ function App() {
                         <Route
                             path="/"
                             element={
-                                <Layout showTabs showLogout>
-                                    <Outlet />
+                                <Layout showLogout>
+                                    <IndexPage />
                                 </Layout>
                             }
                         ></Route>

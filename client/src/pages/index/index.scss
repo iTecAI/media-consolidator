@@ -1,0 +1,19 @@
+.main-search {
+    width: 60%;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translate(0, -50%);
+}
+
+.mode-buttons {
+    width: calc(40% - 15px);
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translate(0, -50%);
+
+    button {
+        width: 20%;
+    }
+}
