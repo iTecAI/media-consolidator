@@ -3,3 +3,5 @@ keycloak-basic
 requests
 pymongo
 fastapi-restful
+fsspec
+sshfs
