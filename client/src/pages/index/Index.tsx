@@ -118,16 +118,20 @@ function SearchResult(props: SearchResultModel) {
                     </>
                 }
             />
-            <CardContent sx={{ position: "relative", boxSizing: "border-box" }}>
-                <Paper
-                    variant="outlined"
-                    sx={{
-                        padding: "15px",
-                    }}
-                >
-                    {props.description}
-                </Paper>
-            </CardContent>
+            {props.description.length ? (
+                <CardContent sx={{ position: "relative", boxSizing: "border-box" }}>
+                    <Paper
+                        variant="outlined"
+                        sx={{
+                            padding: "15px",
+                        }}
+                    >
+                        {props.description}
+                    </Paper>
+                </CardContent>
+            ) : (
+                <></>
+            )}
         </Card>
     );
 }
@@ -152,12 +156,14 @@ export default function IndexPage() {
                     }).then((result) => {
                         if (result.success) {
                             newResults.push(...result.value.map((v) => <SearchResult {...v} />));
+                            setResults(newResults.sort((a, b) => b.similarity - a.similarity));
                         }
                     });
             }
         }
-        setResults(newResults.sort((a, b) => b.similarity - a.similarity));
-    }, [activeModes, toSearch, searchValue]);
+    }, [activeModes, toSearch]);
+
+    console.log(results);
 
     return (
         <Box sx={{ width: "100%", height: "100%" }}>
