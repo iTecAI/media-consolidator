@@ -1,7 +1,7 @@
 from time import time
 from typing import Any, Dict
 from starlite import Starlite, get
-from util import ApplicationState
+from util import ApplicationState, Index
 import json
 import os
 from pymongo.mongo_client import MongoClient
@@ -42,6 +42,12 @@ def load_app(state: ApplicationState):
             state.config["authSource"]["keycloak"]["clientSecret"],
         )
 
+    state.podcastIndex = Index(
+        state.config["media"]["podcasts"]["key"],
+        state.config["media"]["podcasts"]["secret"],
+        state.config["media"]["podcasts"]["user-agent"],
+    )
+
 
 @get("/")
 async def get_root() -> Dict[str, Any]:
@@ -56,6 +62,6 @@ def check_connections():
 
 
 app = Starlite(
-    route_handlers=[get_root, LoginController, AccountController],
+    route_handlers=[get_root, LoginController, AccountController, PodcastController],
     on_startup=[load_app, check_connections],
 )

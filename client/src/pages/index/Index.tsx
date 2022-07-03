@@ -6,7 +6,7 @@ import { get, post } from "../../util/api";
 import "./index.scss";
 
 type ActiveMode = "torrents" | "podcasts" | "youtube" | "music" | "books";
-const modes: ActiveMode[] = ["torrents", "podcasts", "youtube", "music", "books"];
+//const modes: ActiveMode[] = ["torrents", "podcasts", "youtube", "music", "books"];
 
 function ModeButton(props: {
     mode: ActiveMode;
@@ -37,6 +37,15 @@ function ModeButton(props: {
     );
 }
 
+function search(term: string, modes: ActiveMode[]) {
+    for (let mode of modes) {
+        switch (mode) {
+            case "podcasts":
+                get({ path: "/sources/podcasts/search", query: { q: term } }).then(console.log);
+        }
+    }
+}
+
 export default function IndexPage() {
     const [activeModes, setActiveModes] = useState([] as ActiveMode[]);
 
@@ -55,6 +64,11 @@ export default function IndexPage() {
                     size="small"
                     placeholder="Search"
                     className="main-search"
+                    onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                            search((event.target as any).value, activeModes);
+                        }
+                    }}
                 />
                 <ButtonGroup className="mode-buttons">
                     <ModeButton
