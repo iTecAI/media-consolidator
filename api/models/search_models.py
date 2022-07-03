@@ -9,6 +9,8 @@ class SearchResultModel(BaseModel):
     reference: int | str
     canDownload: bool
     canExpand: bool
+    canUpdate: bool
     similarity: float
+    lastDownload: float | None
 
 __all__ = ["SearchResultModel"]

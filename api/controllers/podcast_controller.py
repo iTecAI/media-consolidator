@@ -23,7 +23,9 @@ class PodcastController(Controller):
                 "reference": res.id,
                 "canDownload": True,
                 "canExpand": True,
-                "similarity": difflib.SequenceMatcher(a=res.title, b=q).ratio()
+                "canUpdate": True,
+                "similarity": difflib.SequenceMatcher(a=res.title, b=q).ratio(),
+                "lastDownload": res.lastScrape if res.lastScrape > 0 else None
             } for res in results]
             return final
         except SystemExit:

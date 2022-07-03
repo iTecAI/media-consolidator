@@ -6,6 +6,7 @@ import {
     Podcasts,
     Search,
     Tsunami,
+    Update,
     YouTube,
 } from "@mui/icons-material";
 import {
@@ -22,19 +23,18 @@ import {
     Tooltip,
     Avatar,
     Badge,
+    CardActions,
 } from "@mui/material";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { get } from "../../util/api";
 import "./index.scss";
 
-type ActiveMode = "torrents" | "podcasts" | "youtube" | "music" | "books";
-//const modes: ActiveMode[] = ["torrents", "podcasts", "youtube", "music", "books"];
+type ActiveMode = "torrents" | "podcasts" | "youtube" | "books";
 const ModeIcons: { [key: string]: any } = {
     torrents: <Tsunami fontSize="small" />,
     podcasts: <Podcasts fontSize="small" />,
     youtube: <YouTube fontSize="small" />,
-    music: <MusicNote fontSize="small" />,
     books: <Book fontSize="small" />,
 };
 
@@ -78,7 +78,9 @@ type SearchResultModel = {
     reference: string | number;
     canDownload: boolean;
     canExpand: boolean;
+    canUpdate: boolean;
     similarity: number;
+    lastDownload: number | null;
 };
 
 function SearchResult(props: SearchResultModel) {
@@ -108,6 +110,13 @@ function SearchResult(props: SearchResultModel) {
                                 </IconButton>
                             </Tooltip>
                         )}
+                        {props.canUpdate && (
+                            <Tooltip title="Update">
+                                <IconButton>
+                                    <Update />
+                                </IconButton>
+                            </Tooltip>
+                        )}
                         {props.canExpand && (
                             <Tooltip title="Expand">
                                 <IconButton>
@@ -129,6 +138,13 @@ function SearchResult(props: SearchResultModel) {
                         {props.description}
                     </Paper>
                 </CardContent>
+            ) : (
+                <></>
+            )}
+            {props.lastDownload ? (
+                <CardActions>
+                    Last Download: {new Date(props.lastDownload * 1000).toISOString()}
+                </CardActions>
             ) : (
                 <></>
             )}
@@ -203,12 +219,6 @@ export default function IndexPage() {
                     />
                     <ModeButton
                         mode={"youtube"}
-                        activeModes={activeModes}
-                        setActiveModes={setActiveModes}
-                        onChange={(activeModes) => setToSearch(searchValue)}
-                    />
-                    <ModeButton
-                        mode={"music"}
                         activeModes={activeModes}
                         setActiveModes={setActiveModes}
                         onChange={(activeModes) => setToSearch(searchValue)}
