@@ -5,8 +5,16 @@
     user-select: none;
 }
 
+.nointeract {
+    pointer-events: none;
+}
 .page-content {
     display: inline-block;
     height: 100%;
     width: 100%;
+    overflow: hidden;
+    }
+    
+    body {
+        overflow: hidden;
 }

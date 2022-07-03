@@ -103,10 +103,10 @@ class Index:
             ).hexdigest(),
         }
 
-    def search(self, term: str, clean: bool = False) -> list[PodcastModel]:
+    def search(self, term: str) -> list[PodcastModel]:
         response = requests.get(
             self.BASE_URL.format(path="search/byterm"),
-            params={"q": term, "clean": clean, "pretty": self.debug_mode},
+            params={"q": term, "pretty": self.debug_mode},
             headers=self._make_headers(),
         )
 

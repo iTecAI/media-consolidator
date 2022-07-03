@@ -1,24 +1,8 @@
 from typing import Any, Dict, List
 from starlite import Controller, Provide, get, ValidationException, State
-from pydantic import BaseModel
-from util import PodcastEpisodeModel, PodcastModel, uuid_dep, guard_loggedIn
-
-class PodcastResponseModel(BaseModel):
-    uuid: str | None
-    id: int
-    title: str
-    url: str
-    originalUrl: str
-    link: str
-    description: str
-    author: str
-    ownerName: str
-    image: str
-    artwork: str
-    contentType: str
-    language: str
-    categories: Dict[int, str]
-    lastScrape: float = 0
+from util import PodcastModel, uuid_dep, guard_loggedIn
+from models import SearchResultModel
+import difflib
 
 class PodcastController(Controller):
     path: str = "/sources/podcasts"
@@ -27,9 +11,20 @@ class PodcastController(Controller):
     dependencies = {"uuid": Provide(uuid_dep)}
 
     @get(path="/search")
-    async def search_podcasts(self, q: str, state: State) -> List[PodcastResponseModel]:
+    async def search_podcasts(self, q: str, state: State) -> List[SearchResultModel]:
         try:
             results: List[PodcastModel] = state.podcastIndex.search(q)
-            return [res.dict for res in results]
+            final = [{
+                "title": res.title,
+                "subtitle": res.author,
+                "description": res.description,
+                "image": res.image,
+                "type": "podcasts",
+                "reference": res.id,
+                "canDownload": True,
+                "canExpand": True,
+                "similarity": difflib.SequenceMatcher(a=res.title, b=q).ratio()
+            } for res in results]
+            return final
         except SystemExit:
             raise ValidationException(detail=f"Failed to search for {q}")
